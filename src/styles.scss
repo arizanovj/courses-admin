@@ -1,0 +1,133 @@
+/*sidenav*/
+.sidenav{
+
+    box-shadow: 3px 0 6px rgba(0,0,0,.24);
+  }
+  .sidenav .mat-list .mat-list-item{
+    border-bottom: 1px solid #eee;
+    mat-icon{
+      margin-right:10px;
+    }
+  }
+  .content > :last-child {
+    flex-direction: row;
+    display: flex;
+    flex: 1;
+  }
+  .content-card{ 
+    width:100%;
+  }
+  router-outlet{
+      margin:0 !important   ;
+  }
+  .content-title{
+    > .create-button{
+      float:right;
+      mat-icon{
+        font-size: 1.8em;
+      }
+     
+    }
+    font-size:26px;
+  }
+  
+  app-pagination{
+    padding: 20px 0;
+    display: flex;
+    flex-direction: row-reverse;
+    &> a.mat-icon-button{
+      margin-left: 15px;
+    }
+  }
+
+  /* courses listing */
+  mat-table.table-striped>mat-row:nth-of-type(odd),mat-table.table-striped>mat-row:hover {
+    background-color: #fafafa;
+}
+  .mat-cell.mat-column-id ,.mat-header-cell.mat-column-id{ 
+    flex: 0 0 100px; 
+  }
+  .container{
+    width:100%;
+  }
+  mat-form-field.search-input{
+    font-size:14px;
+  }
+  /*filter*/
+  .filter-menu{
+    &.mat-menu-panel {max-width: 205px;}
+    padding: 15px;
+    h3.filter-menu-title{
+      margin:0;
+      font-size: 16px;
+      color: rgba(0,0,0,.54);
+      mat-icon{
+        float: right;
+    margin-top: -4px;
+      }
+    }
+    button{
+      width:100%;
+    }
+  }
+
+  .vertical-form { 
+   & > mat-form-field{
+    display: block;
+    width: 100%;
+
+  }
+  button[type="submit"]{
+    width:100%;
+  }
+
+}
+ mat-card-title mat-icon.title-icon{
+  margin-right:.6em;
+}
+
+.action-column{
+  text-align:center;
+}
+.action-cell{
+ text-align: center;
+ mat-icon{
+  font-size:1.2em;
+ }
+}
+
+.table-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.09);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.table-container {
+  position: relative;
+height: 100% ;
+  overflow: auto;
+}
+.error-list{
+  font-size:14px;
+  color:red;
+  margin-bottom: 15px;
+}
+.admin-indicator{
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 1em;
+}
+  /*media queries*/
+
+  @media screen and (min-width: 760px) {
+    .vertical-form {
+      width:40%;
+    }
+}

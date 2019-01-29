@@ -1,0 +1,47 @@
+
+<div  fxLayout="column" fxFlex>
+
+  <mat-toolbar color="primary">
+    <button  mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>￼
+    <span>Course Managament</span>
+  </mat-toolbar>
+
+
+  <mat-sidenav-container fxFlex>
+    <mat-sidenav flex=20 #sidenav mode="side" position="begin" class="sidenav md-whiteframe-4dp" opened="!(this.media.isActive('xs') || this.media.isActive('sm'))">
+      <mat-list>
+        <mat-list-item>
+          <mat-icon class="title-icon">school</mat-icon>    <a class="mat-list-item"  [routerLink]="['/courses']" routerLinkActive="active"> All Courses </a>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon class="title-icon">school</mat-icon>
+          <a  [routerLink]="['/courses', 'create']" routerLinkActive="active"> Add Course </a>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon class="title-icon">camera</mat-icon>
+          <a class="mat-list-item"  [routerLink]="['/videos']" routerLinkActive="active"> All Videos </a>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon class="title-icon">camera</mat-icon>
+          <a  [routerLink]="['/videos', 'create']" routerLinkActive="active"> Add Video </a>
+        </mat-list-item>
+
+        <mat-list-item>
+          <mat-icon class="title-icon">people</mat-icon>
+        <a class="mat-list-item"  [routerLink]="['/users']" routerLinkActive="active"> All users </a>
+      </mat-list-item>
+        <mat-list-item>
+          <mat-icon class="title-icon">people</mat-icon>
+        <a  [routerLink]="['/users', 'create']" routerLinkActive="active"> Add User </a>
+      </mat-list-item>
+      </mat-list>
+
+    </mat-sidenav>
+
+    <div class="content" flex=80 fxLayout="row" fxLayout.sm="column" fxLayoutGap="16px">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-container>
+</div>

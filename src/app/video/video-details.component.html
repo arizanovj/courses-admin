@@ -1,0 +1,26 @@
+
+
+<mat-card class="content-card" fxLayout="column">
+  <mat-card-title class="content-title">
+    {{video?.name}}
+  </mat-card-title>
+
+  <div class="container">
+    <div>
+<img style="max-width:200px" alt="{{video?.name}}" src="{{video?.cover}}"/>
+</div>
+<video width="320" height="240" controls>
+  <source src="{{video.src}}" type="video/webm">
+Your browser does not support the video tag.
+</video>
+<p>
+  {{video?.description}}
+</p>
+<p>
+  {{video?.created_at|dateTimeFormatShort}}
+</p>
+<p>
+  {{video?.updated_at|dateTimeFormatShort}}
+</p>
+  </div>
+</mat-card>

@@ -1,0 +1,107 @@
+<mat-card class="content-card" fxLayout="column">
+  <mat-card-title class="content-title">
+
+    <div *ngIf="context == 'create';else update">
+      <mat-icon class="title-icon">people</mat-icon> New User
+    </div>
+
+    <ng-template #update>
+      <mat-icon class="title-icon">people</mat-icon> Update user: {{user.first_name}} {{user.last_name}}
+    </ng-template>
+
+
+  </mat-card-title>
+
+  <div class="container">
+
+    <form class="vertical-form" [formGroup]="userForm" (ngSubmit)="context=='create' ? createUser(): updateUser(id)">
+
+      <mat-form-field>
+        <input placeholder="First Name" matInput formControlName="first_name" [(ngModel)]="user.first_name">
+      </mat-form-field>
+
+
+
+      <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="error-list">
+
+        <div *ngIf="firstName.errors.required">
+          First Name is required.
+        </div>
+        <div *ngIf="firstName.errors.minlength">
+          First name should be at least 2 letters long.
+        </div>
+
+      </div>
+
+      <mat-form-field>
+        <input placeholder="Last Name" matInput formControlName="last_name" [(ngModel)]="user.last_name">
+      </mat-form-field>
+
+      <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="error-list">
+
+        <div *ngIf="lastName.errors.required">
+          Last Name is required.
+        </div>
+        <div *ngIf="lastName.errors.minlength">
+          Last name should be at least 2 letters long.
+        </div>
+
+      </div>
+
+      <mat-form-field>
+        <input placeholder="Email" matInput formControlName="email" [(ngModel)]="user.email">
+      </mat-form-field>
+
+      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error-list">
+
+        <div *ngIf="email.errors.required">
+          Email is required.
+        </div>
+        <div *ngIf="email.errors.email">
+          Email is not valid.
+        </div>
+
+      </div>
+
+      <mat-checkbox formControlName="is_admin" (change)="setIsAdmin($event.checked)"    [(indeterminate)]="indeterminate" [(ngModel)]="user.is_admin">Is Admin</mat-checkbox>
+      <br> <hr>
+      <mat-slide-toggle (change)="updatePassword()" *ngIf="context=='update'">Change Password</mat-slide-toggle>
+      <br>   
+      <mat-form-field *ngIf="showPasswordFields">
+        <input placeholder="Password" matInput type="password" formControlName="password" [(ngModel)]="user.password">
+      </mat-form-field>
+
+      <br>
+      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error-list">
+
+        <div *ngIf="password.errors.required">
+          Password is required.
+        </div>
+        <div *ngIf="password.errors.minlength">
+          Password should contain at least 6 chars.
+        </div>
+
+      </div>
+
+      <mat-form-field  *ngIf="showPasswordFields">
+        <input placeholder="Password Repeat" type="password" matInput formControlName="password_repeat">
+      </mat-form-field>
+
+      <div *ngIf="passwordRepeat.invalid && (passwordRepeat.dirty || passwordRepeat.touched)" class="error-list">
+
+        <div *ngIf="passwordRepeat.errors.required">
+          Password repeat is required.
+        </div>
+        <div *ngIf="passwordRepeat.errors.invalid">
+          Password repeat should match password field.
+        </div>
+
+      </div>
+
+     
+      <button type="submit" mat-raised-button color="primary">Submit</button>
+    </form>
+
+
+  </div>
+</mat-card>

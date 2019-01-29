@@ -1,0 +1,80 @@
+<mat-card class="content-card" fxLayout="column">
+  <mat-card-title class="content-title">
+
+    <div *ngIf="context == 'create';else update">
+      <mat-icon class="title-icon">camera</mat-icon> New Video
+    </div>
+
+    <ng-template #update>
+      <mat-icon class="title-icon">camera</mat-icon> Update video: {{video.name}}
+    </ng-template>
+
+
+  </mat-card-title>
+
+  <div class="container">
+
+    <form class="vertical-form" [formGroup]="videoForm" (ngSubmit)="context=='create' ? createVideo(): updateVideo(id)">
+
+      <mat-form-field>
+        <input placeholder="Name" matInput formControlName="name" [(ngModel)]="video.name">
+      </mat-form-field>
+      <mat-form-field>
+        <textarea rows="5" placeholder="Description" matInput formControlName="description" [(ngModel)]="video.description"></textarea>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input type="text" placeholder="Select Course" aria-label="Number" matInput formControlName="course_id"
+          required [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
+          <mat-option *ngFor="let course of videoCourses" [value]="course">
+            {{course.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+
+      <div *ngIf="id" style="text-align: center">
+        <div>
+          <img style="max-width:200px" alt="{{video.name}}" src="{{video.cover}}" />
+        </div>
+        <mat-slide-toggle (change)="fileControlChange($event,'cover','showCoverElement')" [checked]="checked"
+          [disabled]="disabled">Update Cover</mat-slide-toggle>
+      </div>
+
+      <div *ngIf="showCoverElement">
+        <app-material-file-upload [startUpload]="startUpload" [url]="coverUrl" [context]="context" [formGroup]="videoForm"
+          [name]="'cover'" [text]="'Select cover'" (complete)="onFileComplete($event)">
+        </app-material-file-upload>
+      </div>
+      <br>
+
+      <div *ngIf="id" style="text-align: center">
+
+      <video width="320" height="240" controls>
+        <source src="{{video.src}}" type="video/webm">
+        Your browser does not support the video tag.
+      </video>
+
+    </div>
+  <div *ngIf="id" style="text-align: center">
+
+    <mat-slide-toggle (change)="fileControlChange($event,'src','showVideoElement')" [checked]="checked" [disabled]="disabled">Update
+      Video</mat-slide-toggle>
+  </div>
+  <div *ngIf="showVideoElement">
+    <app-material-file-upload [startUpload]="startUploadVideo" [accept]="'video/*'" [url]="srcUrl" [context]="context"
+      [formGroup]="videoForm" [name]="'src'" [text]="'Select video'" (complete)="onFileComplete($event)">
+    </app-material-file-upload>
+
+  </div>
+
+  <br>
+  <mat-checkbox formControlName="offline" [(ngModel)]="video.offline">Offline Usage</mat-checkbox>
+  <br> <br>
+  <button type="submit" mat-raised-button color="primary">Submit</button>
+  </form>
+
+
+  </div>
+</mat-card>

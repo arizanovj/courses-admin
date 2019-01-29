@@ -1,0 +1,29 @@
+<button mat-icon-button [matMenuTriggerFor]="name">
+  <mat-icon>filter_list</mat-icon>
+</button>
+<mat-menu class="filter-menu" #name="matMenu">
+  <div (click)="$event.stopPropagation()" (keyup)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
+    <form autocomplete="off" [formGroup]="filterForm"  (ngSubmit)="filterSubmit()">
+      <h3 class="filter-menu-title">{{title}}
+        <mat-icon>filter_list</mat-icon>
+      </h3>
+      <mat-form-field>
+        <mat-select  required formControlName="filter" placeholder="Select Filter" (click)="$event.stopPropagation()">
+          <mat-option *ngFor="let filter of filters" [value]="filter.filter">
+            {{ filter.filterName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <input formControlName="value" matInput [matDatepicker]="picker" placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker  #picker></mat-datepicker>
+      </mat-form-field>
+
+
+      <button mat-raised-button color="primary">Filter {{title}}</button>
+    </form>
+  </div>
+</mat-menu>

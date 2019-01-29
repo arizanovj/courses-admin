@@ -1,0 +1,48 @@
+<mat-card class="content-card" fxLayout="column">
+  <mat-card-title class="content-title">
+
+    <div *ngIf="context == 'create';else update">
+      <mat-icon class="title-icon">school</mat-icon> New Course
+    </div>
+
+    <ng-template #update>
+      <mat-icon class="title-icon">school</mat-icon> Update course: {{course.name}}
+    </ng-template>
+
+
+  </mat-card-title>
+
+  <div class="container">
+
+    <form class="vertical-form" [formGroup]="courseForm" (ngSubmit)="context=='create' ? createCourse(): updateCourse(id)">
+
+      <mat-form-field>
+        <input placeholder="Name" matInput formControlName="name" [(ngModel)]="course.name">
+      </mat-form-field>
+      <mat-form-field>
+        <textarea rows="5" placeholder="Description" matInput formControlName="description" [(ngModel)]="course.description"></textarea>
+      </mat-form-field>
+      <div *ngIf="id" style="text-align: center">
+        <mat-slide-toggle (change)="updateCover($event)" [checked]="checked" [disabled]="disabled">Update Cover</mat-slide-toggle>
+      </div>
+
+      <div *ngIf="showCoverElement">
+        <app-material-file-upload
+         [startUpload]="startUpload" 
+         [url]="coverUrl" 
+         [context]="context" 
+         [formGroup]="courseForm" 
+         [name]="'cover'"
+         [text]="'Select cover'" 
+         (complete)="onFileComplete($event)"
+         >
+        </app-material-file-upload>
+      </div>
+      <br>
+
+      <button type="submit" mat-raised-button color="primary">Submit</button>
+    </form>
+
+
+  </div>
+</mat-card>

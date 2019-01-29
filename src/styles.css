@@ -1,0 +1,27 @@
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import "https://fonts.googleapis.com/css?family=Material+Icons";
+@import "https://fonts.googleapis.com/css?family=Material+Icons";
+
+html, body,.content,mat-sidenav-container {
+  font-family: 'Lato', sans-serif;
+  margin: 0;
+  height: 100%;
+  width:100%;
+}
+
+mat-sidenav {
+ width: 260px;
+}
+.content {
+  padding: 12px;
+}
+app-main-layout{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;  
+}
+/*toolbar*/
+.mat-toolbar{
+  box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+  z-index: 2;
+}

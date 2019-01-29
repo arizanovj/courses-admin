@@ -1,0 +1,27 @@
+<div fxLayout="column" fxFlex class="login-form-wrap">
+    <mat-card>
+        <mat-card-title>Sign In to your account</mat-card-title>
+        <form [formGroup]="_loginForm" (ngSubmit)="onSubmit(_loginForm.value)">
+            <div>
+                <mat-form-field [ngClass]="{'has-danger': !_isValid('username')}">
+                    <input matInput type="text" placeholder="Username" [formControl]="_loginForm.controls['username']" [ngClass]="{'form-control-danger': !_isValid('username')}">
+                </mat-form-field>
+                <span class="help-block help-block-error" *ngIf="!_formErrors.username.valid">{{_formErrors.username.message}}</span>
+            </div>
+            <div>
+                <mat-form-field [ngClass]="{'has-danger': !_isValid('password')}">
+                    <input matInput class="form-control" type="password" placeholder="Password" [formControl]="_loginForm.controls['password']"
+                        [ngClass]="{'form-control-danger': !_isValid('password')}">
+                </mat-form-field>
+                <span class="help-block help-block-error" *ngIf="!_formErrors.password.valid">{{_formErrors.password.message}}</span>
+            </div>
+            <button mat-raised-button mat-primary-button type="submit" [disabled]="!_loginForm.valid || _submitted == true">Login</button>
+            <div class="spinner spinner-login" *ngIf="_submitted"></div>
+
+            <div *ngIf="_errorMessage" class="col-xs-12 error-block mt-h">
+                <div class="alert alert-danger">{{_errorMessage}}</div>
+            </div>
+
+        </form>
+    </mat-card>
+</div>

@@ -1,0 +1,36 @@
+ul,
+li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+}
+
+#file-label {
+      display: inline-flex;
+      vertical-align: middle;
+      font-size: 12px;
+      line-height: 18px;
+}
+
+#file-label mat-icon {
+      font-size: 18px;
+      text-align: center;
+}
+
+#file-label a {
+      cursor: pointer;
+}
+
+.upload-component-wrapper{
+     
+      margin-bottom:1.5em;
+      color:#757575;
+}
+.upload-component-wrapper span.label {
+      margin-right:10px;
+}
+.upload-component-wrapper ul > li {
+      padding: 18px 0;
+}
+
+

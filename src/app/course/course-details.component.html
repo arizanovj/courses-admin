@@ -1,0 +1,22 @@
+
+
+<mat-card class="content-card" fxLayout="column">
+  <mat-card-title class="content-title">
+    {{course?.name}}
+  </mat-card-title>
+
+  <div class="container">
+    <div>
+<img style="max-width:200px" alt="{{course?.name}}" src="{{course?.cover}}"/>
+</div>
+<p>
+  {{course?.description}}
+</p>
+<p>
+  {{course?.created_at|dateTimeFormatShort}}
+</p>
+<p>
+  {{course?.updated_at|dateTimeFormatShort}}
+</p>
+  </div>
+</mat-card>

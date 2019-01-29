@@ -1,0 +1,31 @@
+
+
+<mat-card class="content-card" fxLayout="column">
+  <mat-card-title class="content-title">
+    {{user?.first_name}}     {{user?.last_name}} 
+  </mat-card-title>
+
+  <div class="container">
+    <div>
+
+</div>
+<p>
+  {{user?.first_name}}
+</p>
+<p>
+  {{user?.last_name}}
+</p>
+<p>
+  {{user?.email}}
+</p>
+<p>
+  {{user?.is_admin}}
+</p>
+<p>
+  {{user?.created_at|dateTimeFormatShort}}
+</p>
+<p>
+  {{user?.updated_at|dateTimeFormatShort}}
+</p>
+  </div>
+</mat-card>
