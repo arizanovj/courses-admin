@@ -15,7 +15,7 @@
     flex: 1;
   }
   .content-card{ 
-    width:100%;
+    margin: 10px;
   }
   router-outlet{
       margin:0 !important   ;
@@ -124,6 +124,11 @@ height: 100% ;
   text-align: center;
   font-size: 1em;
 }
+.mat-toolbar-single-row{
+  color:#fff;
+  background: #3f51b5;
+}
+
   /*media queries*/
 
   @media screen and (min-width: 760px) {

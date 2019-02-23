@@ -1,4 +1,4 @@
-<mat-card class="content-card" fxLayout="column">
+<mat-card class="content-card" >
   <mat-card-title class="content-title">
     <mat-icon class="title-icon">school</mat-icon>
     Courses
@@ -13,8 +13,6 @@
       <div class="table-loading-shade" *ngIf="loading">
         <mat-spinner></mat-spinner>
       </div>
-
-
       <mat-table #table [dataSource]="dataSource" class="table-striped">
         <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef> ID
@@ -41,6 +39,7 @@
         <ng-container matColumnDef="created_at">
           <mat-header-cell *matHeaderCellDef> Created At
             <app-datetime-filter [name]='"created_at"' [title]='"Created At"' [type]='"date"' (getData)='filterOut($event)'></app-datetime-filter>
+            <app-datetime-filter [name]='"to_created_at"' [title]='"Created At"' [type]='"date"' (getData)='filterOut($event)'></app-datetime-filter>
           </mat-header-cell>
           <mat-cell *matCellDef="let col"> {{col.created_at|dateTimeFormatShort}} </mat-cell>
         </ng-container>

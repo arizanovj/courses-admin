@@ -96,11 +96,12 @@ export class LoginComponent implements OnInit {
         this._authService.login(elementValues.username, elementValues.password)
             .subscribe(
                 result => {
-                    this.logger.debug(result);
-                    if(result['code'] === 200) {
+            
+                    if(result['code'] == 200) {
+                        console.log(result);
                         this._router.navigate(['/dashboard']);
                     } else {
-                        this._errorMessage = 'Staffname or password is incorrect.';
+                        this._errorMessage = 'Username or password is incorrect.';
                         this._submitted = false;
                     }
                 },

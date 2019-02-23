@@ -1,5 +1,10 @@
 import { QueryList } from "@angular/core/";
 
+
+import * as moment from "moment";
+import { ConfigService } from "../../model/config.service";
+import { DatetimeFilterComponent } from "./datetime-filter/datetime-filter.component";
+
 export class Filter {
 
   protected filters = [];
@@ -39,9 +44,18 @@ export class Filter {
   public static getUrlFormattedFilters(filters){
     let filtersArray = [];
     filters.forEach(filterComponents => {
+
       filterComponents.forEach((filter) => { 
+
+      
+        let value = filter.filterForm.value.value;
+ 
+        if(filter.type == "date"){
+          value = moment(value).format(ConfigService.DATE_TIME_FORMAT_TIMESTAMP);
+        }
+
         if(filter.filterForm.valid){
-          filtersArray["filter["+filter.name+"]"] = filter.filterForm.value.filter + "|" +filter.filterForm.value.value
+          filtersArray["filter["+filter.name+"]"] = filter.filterForm.value.filter + "|" +value
         }
       });
     });

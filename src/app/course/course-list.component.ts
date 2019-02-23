@@ -7,18 +7,16 @@ import { KeysetPaginationComponent, Direction } from '../shared/keyset/keyset-pa
 import { DatetimeFilterComponent } from '../shared/filter/datetime-filter/datetime-filter.component';
 import { InputFilterComponent } from '../shared/filter/input-filter/input-filter.component';
 import { KeysetPaginatedList } from '../shared/keyset/keyset.paginated.list';
-import { FilteredList } from '../shared/filter/filtered.list';
 import { Filter } from '../shared/filter/filter';
 import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
 @Component({
-
   templateUrl: './course-list.component.html',
   styleUrls: ['./course-list.component.css']
 })
 export class CourseListComponent extends KeysetPaginatedList implements OnInit {
   @ViewChild(KeysetPaginationComponent)
-  @ViewChild(DatetimeFilterComponent)
+  @ViewChildren(DatetimeFilterComponent) datetimeFilters: QueryList<DatetimeFilterComponent>
   @ViewChildren(InputFilterComponent) inputFilters: QueryList<InputFilterComponent>;
   private courses :Course[];
   private errorMessage: string;
@@ -40,15 +38,14 @@ export class CourseListComponent extends KeysetPaginatedList implements OnInit {
   private getCourses(lastId:number,numOfItems: number, direction: Direction, filter: Array<string>) {
     this.loading = true;
     let data = this.courseService.getCourses(lastId,numOfItems,direction,
-      this.inputFilters == null ? [] : Filter.getUrlFormattedFilters([this.inputFilters])
+      this.inputFilters == null ? [] : Filter.getUrlFormattedFilters([this.inputFilters,this.datetimeFilters])
     );
     this.dataSource = new CourseDataSource(data);
     data.subscribe(val => {this.setIDs(val); this.loading = false;});
   }
 
   private filterOut(data){
-    console.log(Filter.getUrlFormattedFilters([this.inputFilters]));
-    this.getCourses(1,10,Direction.Up,Filter.getUrlFormattedFilters([this.inputFilters]));
+    this.getCourses(1,10,Direction.Up,Filter.getUrlFormattedFilters([this.inputFilters,this.datetimeFilters]));
   }
 
   private deleteCourse(name: string, id: number): void {

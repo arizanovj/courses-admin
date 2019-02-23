@@ -42,9 +42,6 @@ export class InputFilterComponent extends Filter implements OnInit {
         val:this.filterForm.value,
     
       });
-  //    console.log(this.filterForm.value);
-    //  console.log(this.name);
-   //   console.log(this.filterForm.filter);
     }
   }
 

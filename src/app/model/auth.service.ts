@@ -9,7 +9,9 @@ import {Router} from "@angular/router";
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { map,catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})  
 export class AuthService {
     private loggedIn = false;
     public redirectURL = '';
@@ -37,9 +39,11 @@ export class AuthService {
                 {headers: headers}
             )
             .pipe ( map(response => {
-               
-                if (response['code'] == 200 && response['data'] !== "") {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+             
+                if (response['code'] == 200 && response['data'] !== "") {    
+                    console.log(response);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
                     localStorage.setItem(ConfigService.token, response['data']);
+                    console.log(localStorage.getItem(ConfigService.token));
                     this.loggedIn = true;
                   
                 } else {
@@ -74,7 +78,9 @@ export class AuthService {
     }
 
     public isLoggedIn(): boolean {
-        return this.jwtHelper.isTokenExpired();
+        const token = this.getToken();
+        if (!token) return false;
+        return !this.jwtHelper.isTokenExpired(token);
     }
 
     public getJWTValue(): any{

@@ -13,7 +13,7 @@ import { BasicLayoutComponent } from './layouts/basic-layout/basic-layout.compon
 // Routing Module
 import { AppRoutingModule } from './app-routing.module';
 
-import { FlexLayoutModule } from '@angular/flex-layout';
+
 
 
 import { AuthGuard } from './model/auth.guard';
@@ -38,7 +38,7 @@ export function tokenGetter() {
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    FlexLayoutModule,
+
     MatSidenavModule,
     MatListModule,
     MatToolbarModule,
@@ -55,8 +55,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-     //   whitelistedDomains: ['example.com'],
-       // blacklistedRoutes: ['example.com/examplebadroute/']
+        whitelistedDomains: ['localhost:9001','localhost:4200'],
       }
     }),
   ],

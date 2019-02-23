@@ -12,6 +12,7 @@ export class ConfigService{
     static readonly DATE_FORMAT_SHORT = 'dd/MMM/yy';
     static readonly DATE_TIME_FORMAT = `${ConfigService.DATE_FORMAT} hh:mm:ss`;
     static readonly DATE_TIME_FORMAT_SHORT = `${ConfigService.DATE_FORMAT_SHORT} hh:mm`;
+    static readonly DATE_TIME_FORMAT_TIMESTAMP = `YYYY-MM-DD hh:mm:ss`;
 
     public setting:any = {};
 

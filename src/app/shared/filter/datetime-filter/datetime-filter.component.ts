@@ -36,7 +36,6 @@ export class DatetimeFilterComponent  extends Filter implements OnInit {
   }
 
   private filterSubmit(){
-
     if(this.filterForm.valid){
       this.getData.emit({
         val:this.filterForm.value,
