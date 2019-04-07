@@ -11,6 +11,7 @@ import { FilteredList } from '../shared/filter/filtered.list';
 import { Filter } from '../shared/filter/filter';
 import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { GroupDatetimeFilterComponent } from '../shared/filter/group-datetime-filter/group-datetime-filter.component';
 @Component({
 
   templateUrl: './user-list.component.html',
@@ -18,7 +19,7 @@ import { MatDialog } from '@angular/material';
 })
 export class UserListComponent extends KeysetPaginatedList implements OnInit {
   @ViewChild(KeysetPaginationComponent)
-  @ViewChild(DatetimeFilterComponent) dateFilters: QueryList<InputFilterComponent>;
+  @ViewChildren(GroupDatetimeFilterComponent) datetimeFilters: QueryList<DatetimeFilterComponent>
   @ViewChildren(InputFilterComponent) inputFilters: QueryList<InputFilterComponent>;
   private users :User[];
   private errorMessage: string;
@@ -36,18 +37,20 @@ export class UserListComponent extends KeysetPaginatedList implements OnInit {
     this.users = null;
     this.getUsers(1,10,Direction.Up,[]);
   }
+  
+  private getListFilters(){
+    return Filter.getListFilters([this.inputFilters,this.datetimeFilters]);
+  }
 
   private getUsers(lastId:number,numOfItems: number, direction: Direction, filter: Array<string>) {
     this.loading = true;
-    let data = this.userService.getUsers(lastId,numOfItems,direction,
-      this.inputFilters == null ? [] : Filter.getUrlFormattedFilters([this.inputFilters])
-    );
+    let data = this.userService.getUsers(lastId,numOfItems,direction, this.getListFilters());
     this.dataSource = new UserDataSource(data);
     data.subscribe(val => {this.setIDs(val); this.loading = false;});
   }
 
   private filterOut(data){
-    this.getUsers(1,10,Direction.Up,Filter.getUrlFormattedFilters([this.inputFilters]) );
+    this.getUsers(1,10,Direction.Up,this.getListFilters());
   }
 
   private deleteUser(name: string, id: number): void {

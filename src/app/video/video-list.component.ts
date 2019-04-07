@@ -7,18 +7,17 @@ import { KeysetPaginationComponent, Direction } from '../shared/keyset/keyset-pa
 import { DatetimeFilterComponent } from '../shared/filter/datetime-filter/datetime-filter.component';
 import { InputFilterComponent } from '../shared/filter/input-filter/input-filter.component';
 import { KeysetPaginatedList } from '../shared/keyset/keyset.paginated.list';
-import { FilteredList } from '../shared/filter/filtered.list';
 import { Filter } from '../shared/filter/filter';
 import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { GroupDatetimeFilterComponent } from '../shared/filter/group-datetime-filter/group-datetime-filter.component';
 @Component({
-
   templateUrl: './video-list.component.html',
   styleUrls: ['./video-list.component.css']
 })
 export class VideoListComponent extends KeysetPaginatedList implements OnInit {
   @ViewChild(KeysetPaginationComponent)
-  @ViewChild(DatetimeFilterComponent)
+  @ViewChildren(GroupDatetimeFilterComponent) datetimeFilters: QueryList<DatetimeFilterComponent>
   @ViewChildren(InputFilterComponent) inputFilters: QueryList<InputFilterComponent>;
   private videos :Video[];
   private errorMessage: string;
@@ -37,17 +36,22 @@ export class VideoListComponent extends KeysetPaginatedList implements OnInit {
     this.getVideos(1,10,Direction.Up,[]);
   }
 
+  private getListFilters(){
+    return Filter.getListFilters([this.inputFilters,this.datetimeFilters]);
+  }
+
+
   private getVideos(lastId:number,numOfItems: number, direction: Direction, filter: Array<string>) {
     this.loading = true;
     let data = this.videoService.getVideos(lastId,numOfItems,direction,
-      this.inputFilters == null ? [] : Filter.getUrlFormattedFilters([this.inputFilters])
+     this.getListFilters()
     );
     this.dataSource = new VideoDataSource(data);
     data.subscribe(val => {this.setIDs(val); this.loading = false;});
   }
 
   private filterOut(data){
-    this.getVideos(1,10,Direction.Up,Filter.getUrlFormattedFilters([this.inputFilters]));
+    this.getVideos(1,10,Direction.Up,this.getListFilters());
   }
 
   private deleteVideo(name: string, id: number): void {

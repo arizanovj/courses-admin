@@ -8,6 +8,7 @@ import { FormGroup, FormControl, Validators} from '@angular/forms';
   styleUrls: ['./datetime-filter.component.css']
 })
 export class DatetimeFilterComponent  extends Filter implements OnInit {
+  public filterValues: Object[] = [];
   @Input() name: string;
   @Input() title: string;
   @Input() type: string;
@@ -25,8 +26,20 @@ export class DatetimeFilterComponent  extends Filter implements OnInit {
   ngOnInit() {
     this.setFiltersByType(this.type,this.types);
     this.setForm();
+    this.formChange();
   }
 
+  private formChange() {
+    this.filterForm.valueChanges.subscribe(form => {
+      this.filterValues = [];
+      let value = {
+        "name":this.name,
+        "value":form.value,
+        "filter":form.filter,
+      };
+      this.filterValues.push(value);
+    });
+  }
 
   private setForm(){
     this.filterForm = new FormGroup({

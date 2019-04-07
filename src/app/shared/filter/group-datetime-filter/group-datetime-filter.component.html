@@ -1,0 +1,11 @@
+<button mat-icon-button [matMenuTriggerFor]="name">
+  <mat-icon>filter_list</mat-icon>
+</button>
+<mat-menu class="filter-menu" #name="matMenu">
+  <div (click)="$event.stopPropagation()" (keyup)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
+    From {{title}}
+        <app-datetime-filter [name]='elementName + "|from"' [title]='title' [type]='"date"' (getData)='setFilterValues($event,elementName+"|from")'></app-datetime-filter>
+        To {{title}}
+        <app-datetime-filter [name]='elementName+"|to"' [title]='title' [type]='"date"' (getData)='setFilterValues($event,elementName+"|to")'></app-datetime-filter>
+  </div>
+</mat-menu>

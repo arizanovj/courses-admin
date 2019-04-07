@@ -40,13 +40,13 @@
         </ng-container>
         <ng-container matColumnDef="created_at">
           <mat-header-cell *matHeaderCellDef> Created At
-            <app-datetime-filter [name]='"created_at"' [title]='"Created At"' [type]='"date"' (getData)='filterOut($event)'></app-datetime-filter>
+            <app-group-datetime-filter [name]='"created_at"' [title]='"Created At"' [type]='"date"' (getData)='filterOut($event)'></app-group-datetime-filter>
           </mat-header-cell>
           <mat-cell *matCellDef="let col"> {{col.created_at|dateTimeFormatShort}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="updated_at">
           <mat-header-cell *matHeaderCellDef> Updated At
-            <app-datetime-filter [name]='"updated_at"' [title]='"Updated At"' [type]='"date"' (getData)='filterOut($event)'></app-datetime-filter>
+            <app-group-datetime-filter [name]='"updated_at"' [title]='"Updated At"' [type]='"date"' (getData)='filterOut($event)'></app-group-datetime-filter>
           </mat-header-cell>
           <mat-cell *matCellDef="let col"> {{col.updated_at|dateTimeFormatShort}} </mat-cell>
         </ng-container>

@@ -16,6 +16,7 @@ import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.
 import {KeysetPaginationComponent} from './keyset/keyset-pagination.component'
 import {InputFilterComponent} from '../shared/filter/input-filter/input-filter.component';
 import {DatetimeFilterComponent} from '../shared/filter/datetime-filter/datetime-filter.component';
+import { GroupDatetimeFilterComponent } from './filter/group-datetime-filter/group-datetime-filter.component';
 
 @NgModule({
     imports: [
@@ -48,6 +49,7 @@ import {DatetimeFilterComponent} from '../shared/filter/datetime-filter/datetime
         KeysetPaginationComponent,
         InputFilterComponent,
         DatetimeFilterComponent,
+        GroupDatetimeFilterComponent,
     ],
     exports: [
         FormsModule,
@@ -78,7 +80,8 @@ import {DatetimeFilterComponent} from '../shared/filter/datetime-filter/datetime
         MatCheckboxModule,
         MatTableModule,
         MatAutocompleteModule,
-        MatCardModule
+        MatCardModule,
+        GroupDatetimeFilterComponent
     ],
     providers: [
         DateFormatPipe,
