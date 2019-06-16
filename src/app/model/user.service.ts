@@ -7,6 +7,7 @@ import { ConfigService } from './config.service';
 import { AuthService } from './auth.service';
 import { HttpClient, HttpParams, HttpRequest} from '@angular/common/http';
 import { map ,catchError,publishReplay,refCount} from 'rxjs/operators';
+import { Params } from '@angular/router';
 @Injectable()
 export class UserService {
     protected users: ReplaySubject<User[]> = new ReplaySubject(1);
@@ -19,7 +20,7 @@ export class UserService {
     ) { }
 
 
-    public getUsers(lastId: number, numOfItems: number, direction: string, filters: Array<string>): Observable<User[]> {
+    public getUsers(lastId: number, numOfItems: number, direction: string, filters: Params): Observable<User[]> {
 
         let search = new HttpParams()
         .append('lastId', String(lastId))

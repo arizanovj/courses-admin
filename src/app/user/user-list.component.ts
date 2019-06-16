@@ -12,6 +12,7 @@ import { Filter } from '../shared/filter/filter';
 import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
 import { GroupDatetimeFilterComponent } from '../shared/filter/group-datetime-filter/group-datetime-filter.component';
+import { ActivatedRoute, Params } from '@angular/router';
 @Component({
 
   templateUrl: './user-list.component.html',
@@ -29,28 +30,27 @@ export class UserListComponent extends KeysetPaginatedList implements OnInit {
 
   constructor( 
     private userService: UserService,
-     public dialog: MatDialog
+     public dialog: MatDialog,
+     public activatedRoute: ActivatedRoute
    ) {   super(); }
 
   ngOnInit() {
     this.displayedColumns = ['id', 'first_name', 'last_name','email','is_admin','created_at','updated_at','action_column'];
     this.users = null;
-    this.getUsers(1,10,Direction.Up,[]);
+    this.filterOut();
   }
   
-  private getListFilters(){
-    return Filter.getListFilters([this.inputFilters,this.datetimeFilters]);
-  }
-
-  private getUsers(lastId:number,numOfItems: number, direction: Direction, filter: Array<string>) {
+  private getUsers(lastId:number,numOfItems: number, direction: Direction, filter: Params) {
     this.loading = true;
-    let data = this.userService.getUsers(lastId,numOfItems,direction, this.getListFilters());
+    let data = this.userService.getUsers(lastId,numOfItems,direction, filter);
     this.dataSource = new UserDataSource(data);
     data.subscribe(val => {this.setIDs(val); this.loading = false;});
   }
 
-  private filterOut(data){
-    this.getUsers(1,10,Direction.Up,this.getListFilters());
+  private filterOut(){
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.getUsers(1,10,Direction.Up,params);
+    });
   }
 
   private deleteUser(name: string, id: number): void {
@@ -65,7 +65,7 @@ export class UserListComponent extends KeysetPaginatedList implements OnInit {
       if(result){
         this.loading = true;
         let products = this.userService.deleteUser(+result).subscribe(result => {
-          this.getUsers(1,10,Direction.Up,Filter.getUrlFormattedFilters([this.inputFilters]));
+          this.getUsers(1,10,Direction.Up,[]);
           this.loading = false;
         });
       }

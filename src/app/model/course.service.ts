@@ -7,6 +7,7 @@ import { ConfigService } from './config.service';
 import { AuthService } from './auth.service';
 import { HttpClient, HttpParams, HttpRequest} from '@angular/common/http';
 import { map ,catchError,publishReplay,refCount} from 'rxjs/operators';
+import { Params } from '@angular/router';
 
 @Injectable()
 export class CourseService {
@@ -20,7 +21,7 @@ export class CourseService {
     ) { }
 
 
-    public getCourses(lastId: number, numOfItems: number, direction: string, filters: Array<string>): Observable<Course[]> {
+    public getCourses(lastId: number, numOfItems: number, direction: string, filters:Params): Observable<Course[]> {
 
         let search = new HttpParams()
         .append('lastId', String(lastId))

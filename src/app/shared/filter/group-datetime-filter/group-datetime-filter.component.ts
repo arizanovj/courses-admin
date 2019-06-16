@@ -14,7 +14,6 @@ export class GroupDatetimeFilterComponent extends Filter implements OnInit {
   @Input() name: string;
   @Input() title: string;
   @Input() type: string;
-  @Output() getData = new EventEmitter();
   public filterForm: FormGroup;
   private elementName: string;
 
@@ -26,17 +25,4 @@ export class GroupDatetimeFilterComponent extends Filter implements OnInit {
   ngOnInit() {
     this.elementName = this.name;
   }
-  
-  public setFilterValues(data,name){
- console.log(name);
-    let value = {
-      "name":name,
-      "value":data.val.value,
-      "filter":data.val.filter,
-      "type":this.type
-    };
-    this.filterValues.push(value);
-    this.getData.emit(data);
-  }
-
 }

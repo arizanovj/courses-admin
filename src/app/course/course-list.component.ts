@@ -11,6 +11,7 @@ import { Filter } from '../shared/filter/filter';
 import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
 import { GroupDatetimeFilterComponent } from '../shared/filter/group-datetime-filter/group-datetime-filter.component';
+import { ActivatedRoute, Params } from '@angular/router';
 @Component({
   templateUrl: './course-list.component.html',
   styleUrls: ['./course-list.component.css']
@@ -27,43 +28,28 @@ export class CourseListComponent extends KeysetPaginatedList implements OnInit {
 
   constructor( 
     private courseService: CourseService,
-     public dialog: MatDialog
+     public dialog: MatDialog,
+     private activatedRoute: ActivatedRoute
    ) {   super(); }
 
   ngOnInit() {
     this.displayedColumns = ['id', 'name', 'description', 'created_at','updated_at','action_column'];
     this.courses = null;
-    this.getCourses(1,10,Direction.Up,this.getListFilters());
+    this.getCourses(1,10,Direction.Up,[]);
+    this.filterOut();
   }
 
-  private getListFilters(){
-    return Filter.getListFilters([this.inputFilters,this.datetimeFilters]);
-   /*let filters: string[] = [];
-    if(this.inputFilters !== undefined){
-      let fil = Filter.getUrlFormattedFilters(this.inputFilters);
-      for (let key in fil){
-        filters[key]= fil[key];
-      }
-    }
-   
-    if( this.datetimeFilters!==undefined){
-      let fil = Filter.getUrlFormattedFilters(this.datetimeFilters);
-      for (let key in fil){
-        filters[key]= fil[key];
-      }
-    }
-    return filters;*/
-  }
-
-  private getCourses(lastId:number,numOfItems: number, direction: Direction, filter: Array<string>) {
+  private getCourses(lastId:number,numOfItems: number, direction: Direction, filter: Params) {
     this.loading = true;   
-    let data = this.courseService.getCourses(lastId,numOfItems,direction,this.getListFilters());
+    let data = this.courseService.getCourses(lastId,numOfItems,direction,filter);
     this.dataSource = new CourseDataSource(data);
     data.subscribe(val => {this.setIDs(val); this.loading = false;});
   }
 
-  private filterOut(data){
-    this.getCourses(1,10,Direction.Up,this.getListFilters());
+  private filterOut(){
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.getCourses(1,10,Direction.Up,params);
+    });
   }
 
   private deleteCourse(name: string, id: number): void {
@@ -78,7 +64,7 @@ export class CourseListComponent extends KeysetPaginatedList implements OnInit {
       if(result){
         this.loading = true;
         let products = this.courseService.deleteCourse(+result).subscribe(result => {
-          this.getCourses(1,10,Direction.Up,this.getListFilters());
+          this.getCourses(1,10,Direction.Up,[]);
           this.loading = false;
         });
       }

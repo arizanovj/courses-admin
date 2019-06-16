@@ -7,10 +7,10 @@ import { KeysetPaginationComponent, Direction } from '../shared/keyset/keyset-pa
 import { DatetimeFilterComponent } from '../shared/filter/datetime-filter/datetime-filter.component';
 import { InputFilterComponent } from '../shared/filter/input-filter/input-filter.component';
 import { KeysetPaginatedList } from '../shared/keyset/keyset.paginated.list';
-import { Filter } from '../shared/filter/filter';
 import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
 import { GroupDatetimeFilterComponent } from '../shared/filter/group-datetime-filter/group-datetime-filter.component';
+import { Params, ActivatedRoute } from '@angular/router';
 @Component({
   templateUrl: './video-list.component.html',
   styleUrls: ['./video-list.component.css']
@@ -27,31 +27,27 @@ export class VideoListComponent extends KeysetPaginatedList implements OnInit {
 
   constructor( 
     private videoService: VideoService,
+    private activatedRoute: ActivatedRoute,
      public dialog: MatDialog
    ) {   super(); }
 
   ngOnInit() {
     this.displayedColumns = ['id', 'name', 'description', 'created_at','updated_at','action_column'];
     this.videos = null;
-    this.getVideos(1,10,Direction.Up,[]);
+    this.filterOut();
   }
 
-  private getListFilters(){
-    return Filter.getListFilters([this.inputFilters,this.datetimeFilters]);
-  }
-
-
-  private getVideos(lastId:number,numOfItems: number, direction: Direction, filter: Array<string>) {
+  private getVideos(lastId:number,numOfItems: number, direction: Direction, filter:Params) {
     this.loading = true;
-    let data = this.videoService.getVideos(lastId,numOfItems,direction,
-     this.getListFilters()
-    );
+    let data = this.videoService.getVideos(lastId,numOfItems,direction, filter);
     this.dataSource = new VideoDataSource(data);
     data.subscribe(val => {this.setIDs(val); this.loading = false;});
   }
 
-  private filterOut(data){
-    this.getVideos(1,10,Direction.Up,this.getListFilters());
+  private filterOut(){
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.getVideos(1,10,Direction.Up,params);
+    });
   }
 
   private deleteVideo(name: string, id: number): void {
@@ -66,7 +62,7 @@ export class VideoListComponent extends KeysetPaginatedList implements OnInit {
       if(result){
         this.loading = true;
         let products = this.videoService.deleteVideo(+result).subscribe(result => {
-          this.getVideos(1,10,Direction.Up,Filter.getUrlFormattedFilters([this.inputFilters]));
+          this.getVideos(1,10,Direction.Up,[]);
           this.loading = false;
         });
       }
@@ -75,9 +71,6 @@ export class VideoListComponent extends KeysetPaginatedList implements OnInit {
   }
 
 }
-
-
-
 export class VideoDataSource extends DataSource<any> {
   constructor(private videoData: Observable<Video[]>) {
     super();

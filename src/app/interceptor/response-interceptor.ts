@@ -16,7 +16,7 @@ export class ResponseInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(map(event => {
       if (event instanceof HttpResponse) {
         if (event.body) {
-            console.log(event);
+
         }
    
       }

@@ -1,9 +1,9 @@
-import { QueryList } from "@angular/core/";
+
 
 
 import * as moment from "moment";
 import { ConfigService } from "../../model/config.service";
-import { DatetimeFilterComponent } from "./datetime-filter/datetime-filter.component";
+
 
 export class Filter {
 
@@ -27,55 +27,38 @@ export class Filter {
     });
 
   }
-
-  public static getFilters(filters) {
-    let filtersArray = [];
-    filters.forEach(filterComponents => {
-      filterComponents.forEach(filter => {
-        if (filter.filterForm.valid) {
-          filtersArray[filter.name] = filter.filterForm.value.filter + "|" + filter.filterForm.value.value
-        }
-      });
-    });
-    return filtersArray;
-
+  protected getFilterKey(name: string): string {
+    return "filter[" + name + "]";
   }
 
-  public static getUrlFormattedFilters(filters) {
-    let filtersArray : string[]= [];
-    filters.forEach(filterComponents => {
-        filterComponents.filterValues.forEach(element => {
-          let value = element.value;
-
-          if (element.type == "date") {
-            value = moment(value).format(ConfigService.DATE_TIME_FORMAT_TIMESTAMP);
-          }
-
-          filtersArray["filter[" + element.name + "]"] = element.filter + "|" + value;
-     
-        });
-
-
-    });
-
-    return filtersArray;
+  protected getFilterValue(filter: string, value: string, type: string): string {
+    if (type == "date") {
+      value = moment(value).format(ConfigService.DATE_TIME_FORMAT_TIMESTAMP);
+    }
+    return filter + "|" + value;
   }
 
+  protected getNameFromUrlFilter(filterName) {
+    return (filterName.slice(7)).replace("]","");
+  }
 
-  public static getListFilters(listFilters){
-    
-    let filters: string[] = [];
+  protected getFilterAndValue(filter) {
+    let valueAndFilter = filter.split("|");
+    return {
+      filter: valueAndFilter[0],
+      value: valueAndFilter[1]
+    }
+  }
 
-    listFilters.forEach(ff =>{
-      if(ff !== undefined){
-        let fil = Filter.getUrlFormattedFilters(ff);
-        for (let key in fil){
-          filters[key]= fil[key];
+  protected getFilterAndValueByName(params, name) {
+    if (Object.keys(params).length > 0) {
+      for (let param in params) {
+        if (name === this.getNameFromUrlFilter(param)) {
+          return this.getFilterAndValue(params[param]);
         }
       }
-    });
-  
-     return filters;
-   }
+    }
+    return null;
+  }
 
 }

@@ -7,6 +7,7 @@ import { ConfigService } from './config.service';
 import { AuthService } from './auth.service';
 import { HttpClient, HttpParams, HttpRequest} from '@angular/common/http';
 import { map ,catchError,publishReplay,refCount} from 'rxjs/operators';
+import { Params } from '@angular/router';
 @Injectable()
 export class VideoService {
     protected videos: ReplaySubject<Video[]> = new ReplaySubject(1);
@@ -19,7 +20,7 @@ export class VideoService {
     ) { }
 
 
-    public getVideos(lastId: number, numOfItems: number, direction: string, filters: Array<string>): Observable<Video[]> {
+    public getVideos(lastId: number, numOfItems: number, direction: string, filters: Params): Observable<Video[]> {
 
         let search = new HttpParams()
         .append('lastId', String(lastId))
