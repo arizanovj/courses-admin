@@ -40,16 +40,20 @@ export class UserListComponent extends KeysetPaginatedList implements OnInit {
     this.filterOut();
   }
   
-  private getUsers(lastId:number,numOfItems: number, direction: Direction, filter: Params) {
+  private getUsers( filter: Params) {
     this.loading = true;
-    let data = this.userService.getUsers(lastId,numOfItems,direction, filter);
+    let data = this.userService.getUsers(filter);
     this.dataSource = new UserDataSource(data);
     data.subscribe(val => {this.setIDs(val); this.loading = false;});
   }
 
   private filterOut(){
     this.activatedRoute.queryParams.subscribe(params => {
-      this.getUsers(1,10,Direction.Up,params);
+      if(params['lastId']){
+        this.getUsers(params);
+       }else{
+        this.getUsers({"numOfItems":this.NUM_OF_ITEMS,"lastID":this.LAST_ID,"direction":this.DIRECTION});
+       }
     });
   }
 
@@ -61,11 +65,10 @@ export class UserListComponent extends KeysetPaginatedList implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-    
       if(result){
         this.loading = true;
         let products = this.userService.deleteUser(+result).subscribe(result => {
-          this.getUsers(1,10,Direction.Up,[]);
+          this.getUsers({"numOfItems":this.NUM_OF_ITEMS,"lastID":this.LAST_ID,"direction":this.DIRECTION});
           this.loading = false;
         });
       }

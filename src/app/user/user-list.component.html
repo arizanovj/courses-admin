@@ -17,26 +17,26 @@
           <mat-table #table [dataSource]="dataSource" class="table-striped">
             <ng-container matColumnDef="id">
               <mat-header-cell *matHeaderCellDef> ID
-                <app-input-filter [name]='"ID"' [title]='"ID"' [type]='"number"' (getData)='filterOut($event)'></app-input-filter>
+                <app-input-filter [name]='"ID"' [title]='"ID"' [type]='"number"'></app-input-filter>
               </mat-header-cell>
               <mat-cell *matCellDef="let col"> {{col.id}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="email">
                 <mat-header-cell *matHeaderCellDef> Email
-                  <app-input-filter [name]='"email"' [title]='"Email"' [type]='"string"' (getData)='filterOut($event)'></app-input-filter>
+                  <app-input-filter [name]='"email"' [title]='"Email"' [type]='"string"'></app-input-filter>
                 </mat-header-cell>
                 <mat-cell *matCellDef="let col"> {{col.email}} </mat-cell>
               </ng-container>
             <ng-container matColumnDef="first_name">
               <mat-header-cell *matHeaderCellDef> First Name
-                <app-input-filter [name]='"first_name"' [title]='"First Name"' [type]='"string"' (getData)='filterOut($event)'></app-input-filter>
+                <app-input-filter [name]='"first_name"' [title]='"First Name"' [type]='"string"'></app-input-filter>
               </mat-header-cell>
               <mat-cell *matCellDef="let col"> {{col.first_name}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="last_name">
               <mat-header-cell *matHeaderCellDef> Last Name
-                <app-input-filter [name]='"last_name"' [title]='"Last Name"' [type]='"string"' (getData)='filterOut($event)'></app-input-filter>
+                <app-input-filter [name]='"last_name"' [title]='"Last Name"' [type]='"string"'></app-input-filter>
               </mat-header-cell>
               <mat-cell *matCellDef="let col"> {{col.last_name }} </mat-cell>
             </ng-container>
@@ -52,13 +52,13 @@
 
             <ng-container matColumnDef="created_at">
               <mat-header-cell *matHeaderCellDef> Created At
-                <app-group-datetime-filter [name]='"created_at"' [title]='"Created At"' [type]='"date"' (getData)='filterOut($event)'></app-group-datetime-filter>
+                <app-group-datetime-filter [name]='"created_at"' [title]='"Created At"' [type]='"date"'></app-group-datetime-filter>
               </mat-header-cell>
               <mat-cell *matCellDef="let col"> {{col.created_at|dateTimeFormatShort}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="updated_at">
               <mat-header-cell *matHeaderCellDef> Updated At
-                <app-group-datetime-filter [name]='"updated_at"' [title]='"Updated At"' [type]='"date"' (getData)='filterOut($event)'></app-group-datetime-filter>
+                <app-group-datetime-filter [name]='"updated_at"' [title]='"Updated At"' [type]='"date"'></app-group-datetime-filter>
               </mat-header-cell>
               <mat-cell *matCellDef="let col"> {{col.updated_at|dateTimeFormatShort}} </mat-cell>
             </ng-container>

@@ -13,7 +13,6 @@ export class DatetimeFilterComponent  extends Filter implements OnInit {
   @Input() name: string;
   @Input() title: string;
   @Input() type: string;
-  @Output() getData = new EventEmitter();
   public filterForm: FormGroup;
   constructor(
     private router: Router,

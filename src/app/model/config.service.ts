@@ -20,7 +20,7 @@ export class ConfigService{
         if(environment.production == true) {
             this.apiHost = 'http://ngapi.dev/v1';
         } else {
-            this.apiHost = 'http://192.168.1.121:9001';
+            this.apiHost = 'http://localhost:9001';
         }
 
     }

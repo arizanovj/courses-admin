@@ -18,13 +18,13 @@
       <mat-table #table [dataSource]="dataSource" class="table-striped">
         <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef> ID
-            <app-input-filter [name]='"ID"' [title]='"ID"' [type]='"number"' (getData)='filterOut($event)'></app-input-filter>
+            <app-input-filter [name]='"ID"' [title]='"ID"' [type]='"number"'></app-input-filter>
           </mat-header-cell>
           <mat-cell *matCellDef="let col"> {{col.id}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef> Name
-            <app-input-filter [name]='"name"' [title]='"Name"' [type]='"string"' (getData)='filterOut($event)'></app-input-filter>
+            <app-input-filter [name]='"name"' [title]='"Name"' [type]='"string"'></app-input-filter>
           </mat-header-cell>
           <mat-cell *matCellDef="let col"> {{col.name}} </mat-cell>
         </ng-container>
@@ -34,19 +34,19 @@
         </ng-container>
         <ng-container matColumnDef="description">
           <mat-header-cell *matHeaderCellDef> Description
-            <app-input-filter [name]='"description"' [title]='"Description"' [type]='"string"' (getData)='filterOut($event)'></app-input-filter>
+            <app-input-filter [name]='"description"' [title]='"Description"' [type]='"string"'></app-input-filter>
           </mat-header-cell>
           <mat-cell *matCellDef="let col"> {{col.description|truncate : 20 : false : '...' }} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="created_at">
           <mat-header-cell *matHeaderCellDef> Created At
-            <app-group-datetime-filter [name]='"created_at"' [title]='"Created At"' [type]='"date"' (getData)='filterOut($event)'></app-group-datetime-filter>
+            <app-group-datetime-filter [name]='"created_at"' [title]='"Created At"' [type]='"date"'></app-group-datetime-filter>
           </mat-header-cell>
           <mat-cell *matCellDef="let col"> {{col.created_at|dateTimeFormatShort}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="updated_at">
           <mat-header-cell *matHeaderCellDef> Updated At
-            <app-group-datetime-filter [name]='"updated_at"' [title]='"Updated At"' [type]='"date"' (getData)='filterOut($event)'></app-group-datetime-filter>
+            <app-group-datetime-filter [name]='"updated_at"' [title]='"Updated At"' [type]='"date"'></app-group-datetime-filter>
           </mat-header-cell>
           <mat-cell *matCellDef="let col"> {{col.updated_at|dateTimeFormatShort}} </mat-cell>
         </ng-container>

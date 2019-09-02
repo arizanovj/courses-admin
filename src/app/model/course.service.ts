@@ -21,18 +21,9 @@ export class CourseService {
     ) { }
 
 
-    public getCourses(lastId: number, numOfItems: number, direction: string, filters:Params): Observable<Course[]> {
-
-        let search = new HttpParams()
-        .append('lastId', String(lastId))
-        .append('numOfItems', String(numOfItems))
-        .append('direction', direction);
-        for (let prop in filters) {
-            search = search.append(prop, filters[prop]);
-        }
-         
+    public getCourses(filters:Params): Observable<Course[]> {
         return this.http.get( this.configService.apiHost + '/courses/',{
-            params: search,
+            params: filters,
             headers:this.authService.getHeaders()
         } ).pipe(
             map((response) => { return <Course[]>response['data'];  }),

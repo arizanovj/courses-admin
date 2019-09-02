@@ -20,18 +20,10 @@ export class VideoService {
     ) { }
 
 
-    public getVideos(lastId: number, numOfItems: number, direction: string, filters: Params): Observable<Video[]> {
-
-        let search = new HttpParams()
-        .append('lastId', String(lastId))
-        .append('numOfItems', String(numOfItems))
-        .append('direction', direction);
-        for (let prop in filters) {
-            search = search.append(prop, filters[prop]);
-        }
-         
+    public getVideos( filters: Params): Observable<Video[]> {
+  
         return this.http.get( this.configService.apiHost + '/videos/',{
-            params: search,
+            params: filters,
             headers:this.authService.getHeaders()
         } ).pipe(map((response) => {
                 return <Video[]>response['data'];  

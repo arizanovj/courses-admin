@@ -20,18 +20,9 @@ export class UserService {
     ) { }
 
 
-    public getUsers(lastId: number, numOfItems: number, direction: string, filters: Params): Observable<User[]> {
-
-        let search = new HttpParams()
-        .append('lastId', String(lastId))
-        .append('numOfItems', String(numOfItems))
-        .append('direction', direction);
-        for (let prop in filters) {
-            search = search.append(prop, filters[prop]);
-        }
-         
+    public getUsers(filters: Params): Observable<User[]> {
         return this.http.get( this.configService.apiHost + '/users/',{
-            params: search,
+            params: filters,
             headers:this.authService.getHeaders()
         } ).pipe(map((response) => {
                 return <User[]>response['data'];  

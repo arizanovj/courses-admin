@@ -7,7 +7,6 @@ import { KeysetPaginationComponent, Direction } from '../shared/keyset/keyset-pa
 import { DatetimeFilterComponent } from '../shared/filter/datetime-filter/datetime-filter.component';
 import { InputFilterComponent } from '../shared/filter/input-filter/input-filter.component';
 import { KeysetPaginatedList } from '../shared/keyset/keyset.paginated.list';
-import { Filter } from '../shared/filter/filter';
 import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
 import { GroupDatetimeFilterComponent } from '../shared/filter/group-datetime-filter/group-datetime-filter.component';
@@ -35,20 +34,26 @@ export class CourseListComponent extends KeysetPaginatedList implements OnInit {
   ngOnInit() {
     this.displayedColumns = ['id', 'name', 'description', 'created_at','updated_at','action_column'];
     this.courses = null;
-    this.getCourses(1,10,Direction.Up,[]);
+
     this.filterOut();
   }
 
-  private getCourses(lastId:number,numOfItems: number, direction: Direction, filter: Params) {
+  private getCourses(filter: Params) {
+
     this.loading = true;   
-    let data = this.courseService.getCourses(lastId,numOfItems,direction,filter);
+    let data = this.courseService.getCourses(filter);
     this.dataSource = new CourseDataSource(data);
-    data.subscribe(val => {this.setIDs(val); this.loading = false;});
+    data.subscribe(val => { this.setIDs(val); this.loading = false;});
   }
 
   private filterOut(){
     this.activatedRoute.queryParams.subscribe(params => {
-      this.getCourses(1,10,Direction.Up,params);
+       if(params['lastId']){
+        this.getCourses(params);
+       }else{
+        this.getCourses({"numOfItems":this.NUM_OF_ITEMS,"lastID":this.LAST_ID,"direction":this.DIRECTION});
+       }
+        
     });
   }
 
@@ -64,17 +69,14 @@ export class CourseListComponent extends KeysetPaginatedList implements OnInit {
       if(result){
         this.loading = true;
         let products = this.courseService.deleteCourse(+result).subscribe(result => {
-          this.getCourses(1,10,Direction.Up,[]);
+          this.getCourses({"numOfItems":this.NUM_OF_ITEMS,"lastID":this.LAST_ID,"direction":this.DIRECTION});
           this.loading = false;
         });
       }
     });
     
   }
-
 }
-
-
 
 export class CourseDataSource extends DataSource<any> {
   constructor(private courseData: Observable<Course[]>) {

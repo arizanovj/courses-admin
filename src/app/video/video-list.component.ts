@@ -37,16 +37,20 @@ export class VideoListComponent extends KeysetPaginatedList implements OnInit {
     this.filterOut();
   }
 
-  private getVideos(lastId:number,numOfItems: number, direction: Direction, filter:Params) {
+  private getVideos(filter:Params) {
     this.loading = true;
-    let data = this.videoService.getVideos(lastId,numOfItems,direction, filter);
+    let data = this.videoService.getVideos(filter);
     this.dataSource = new VideoDataSource(data);
     data.subscribe(val => {this.setIDs(val); this.loading = false;});
   }
 
   private filterOut(){
     this.activatedRoute.queryParams.subscribe(params => {
-      this.getVideos(1,10,Direction.Up,params);
+      if(params['lastId']){
+        this.getVideos(params);
+       }else{
+        this.getVideos({"numOfItems":this.NUM_OF_ITEMS,"lastID":this.LAST_ID,"direction":this.DIRECTION});
+       }
     });
   }
 
@@ -62,7 +66,8 @@ export class VideoListComponent extends KeysetPaginatedList implements OnInit {
       if(result){
         this.loading = true;
         let products = this.videoService.deleteVideo(+result).subscribe(result => {
-          this.getVideos(1,10,Direction.Up,[]);
+        
+          this.getVideos({"numOfItems":this.NUM_OF_ITEMS,"lastID":this.LAST_ID,"direction":this.DIRECTION});
           this.loading = false;
         });
       }
